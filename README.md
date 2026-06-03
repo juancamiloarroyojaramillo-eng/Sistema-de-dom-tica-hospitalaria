@@ -71,7 +71,7 @@ El sistema monitorea las condiciones ambientales críticas para la conservación
 ## Archivos del proyecto
 
 ```
-farmacia_esp32/
+final digital/
 ├── main.py        → lógica principal: sensores, actuadores y servidor HTTP
 ├── ssd1306.py     → driver de la pantalla OLED (subir a la ESP32)
 ├── index.html     → estructura del dashboard web
