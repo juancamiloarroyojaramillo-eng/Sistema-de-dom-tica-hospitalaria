@@ -31,7 +31,7 @@ El sistema monitorea las condiciones ambientales críticas para la conservación
 | 1 | LED rojo | Alerta de temperatura fuera de rango |
 | 1 | LED azul | Alerta de humedad fuera de rango |
 | 1 | OLED SSD1306 128×64 | Pantalla de visualización local (I2C) |
-| 2 | Resistencia 220 Ω | Limitadora de corriente para LEDs |
+| 2 | Resistencia 10K Ω | Limitadora de corriente para LEDs |
 | 1 | Protoboard | Montaje del circuito |
 | — | Cables jumper | Conexiones |
 
@@ -118,7 +118,7 @@ farmacia_esp32/
 **Botón de emergencia (interrupción IRQ):**
 - Presionar el botón fuerza la apertura inmediata de la puerta.
 - Presionar nuevamente la cierra.
-- Desde el dashboard también se puede resetear el modo emergencia.
+- Desde el dashboard también se puede resetear el modo emergencia u activar.
 
 **Alertas de temperatura y humedad:**
 - Rango seguro: temperatura 20–25 °C, humedad 40–60 %.
