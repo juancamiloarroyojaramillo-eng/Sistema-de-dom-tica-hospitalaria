@@ -1,0 +1,249 @@
+/* =====================================================
+   ALMACÉN DE MEDICAMENTOS — Dashboard ESP32
+   Estilo: industrial-clínico, tipografía técnica
+   ===================================================== */
+
+:root {
+  --bg:        #0d1117;
+  --surface:   #161b22;
+  --surface2:  #21262d;
+  --border:    #30363d;
+  --text:      #e6edf3;
+  --muted:     #8b949e;
+  --verde:     #3fb950;
+  --rojo:      #f85149;
+  --azul:      #58a6ff;
+  --amarillo:  #d29922;
+  --naranja:   #f0883e;
+  --radius:    14px;
+  --font-main: 'Syne', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-mono);
+  min-height: 100vh;
+}
+
+/* ---- BANNER EMERGENCIA ---- */
+.banner-emergencia {
+  background: var(--rojo);
+  color: #fff;
+  text-align: center;
+  padding: 12px 20px;
+  font-family: var(--font-main);
+  font-size: 15px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  animation: pulseRed 1s infinite alternate;
+}
+.banner-emergencia button {
+  background: #fff;
+  color: var(--rojo);
+  border: none;
+  border-radius: 6px;
+  padding: 4px 14px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  cursor: pointer;
+}
+.banner-emergencia.oculto { display: none; }
+@keyframes pulseRed {
+  from { background: #f85149; }
+  to   { background: #da3633; }
+}
+
+/* ---- CONTENEDOR ---- */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 24px 60px;
+}
+
+/* ---- HEADER ---- */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 40px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 24px;
+}
+.header-tag {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--azul);
+  font-family: var(--font-mono);
+  margin-bottom: 6px;
+  display: block;
+}
+h1 {
+  font-family: var(--font-main);
+  font-size: 38px;
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--text);
+}
+h1 em {
+  font-style: normal;
+  color: var(--azul);
+}
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.status-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--muted);
+  transition: background 0.4s;
+}
+.status-dot.ok     { background: var(--verde); box-shadow: 0 0 8px var(--verde); }
+.status-dot.error  { background: var(--rojo);  box-shadow: 0 0 8px var(--rojo); }
+
+/* ---- SECTION TITLE ---- */
+.section-title {
+  font-family: var(--font-main);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 32px 0 14px;
+  border-left: 3px solid var(--azul);
+  padding-left: 10px;
+}
+
+/* ---- GRIDS ---- */
+.grid { display: grid; gap: 14px; }
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+@media (max-width: 900px) { .grid-4 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 520px) { .grid-4 { grid-template-columns: 1fr; } }
+
+/* ---- CARDS ---- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 18px 16px;
+  position: relative;
+  transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
+}
+.card:hover {
+  border-color: var(--azul);
+  box-shadow: 0 0 18px rgba(88,166,255,0.08);
+}
+.card-icon   { font-size: 22px; margin-bottom: 6px; }
+.card-label  { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.card-value  { font-family: var(--font-main); font-size: 36px; font-weight: 800; line-height: 1; color: var(--text); }
+.card-value.small { font-size: 22px; margin-top: 6px; }
+.card-unit   { font-size: 13px; color: var(--muted); margin-top: 2px; }
+.rango       { font-size: 10px; color: var(--muted); margin-top: 10px; line-height: 1.5; }
+
+/* Badges */
+.card-badge {
+  position: absolute;
+  top: 14px; right: 14px;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 20px;
+  display: none;
+}
+.card-badge.ok      { display: block; background: rgba(63,185,80,0.15); color: var(--verde); border: 1px solid var(--verde); }
+.card-badge.alerta  { display: block; background: rgba(248,81,73,0.15); color: var(--rojo);  border: 1px solid var(--rojo);  animation: blink 1s step-end infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+
+/* States por color */
+.card.alerta { border-color: var(--rojo);    background: rgba(248,81,73,0.06); }
+.card.ok     { border-color: var(--verde);   background: rgba(63,185,80,0.05); }
+.card.abierta{ border-color: var(--azul);    background: rgba(88,166,255,0.06); }
+.card.emerg  { border-color: var(--naranja); background: rgba(240,136,62,0.08); }
+
+/* LED circles */
+.led-circle {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  margin: 10px auto 4px;
+  background: #333;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+.led-circle.on-rojo  { background: var(--rojo);   box-shadow: 0 0 14px var(--rojo); }
+.led-circle.on-azul  { background: var(--azul);   box-shadow: 0 0 14px var(--azul); }
+.led-circle.off      { background: #2a2a2a; box-shadow: none; }
+
+/* ---- CONTROL BAR ---- */
+.control-bar {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.btn {
+  padding: 12px 28px;
+  border-radius: 8px;
+  border: none;
+  font-family: var(--font-main);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
+}
+.btn:active { transform: scale(0.97); }
+.btn-open  { background: var(--azul);  color: #0d1117; }
+.btn-close { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
+.btn:hover { opacity: 0.88; }
+
+/* ---- GRÁFICAS ---- */
+.charts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+@media (max-width: 720px) { .charts-grid { grid-template-columns: 1fr; } }
+
+.chart-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+.chart-card h3 {
+  font-family: var(--font-main);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+canvas { width: 100% !important; height: 200px !important; }
+
+/* ---- LOG ---- */
+.log-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  max-height: 260px;
+  overflow-y: auto;
+  font-size: 12px;
+  line-height: 1.8;
+  color: var(--muted);
+}
+.log-box::-webkit-scrollbar { width: 4px; }
+.log-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.log-placeholder { font-style: italic; }
+.log-entry { border-bottom: 1px solid var(--border); padding: 4px 0; }
+.log-entry.alerta { color: var(--rojo); }
+.log-entry.ok     { color: var(--verde); }
+.log-entry.info   { color: var(--azul); }

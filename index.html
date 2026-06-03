@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Almacén de Medicamentos — ESP32</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@600;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <!-- BANNER EMERGENCIA -->
+  <div id="banner-emergencia" class="banner-emergencia oculto">
+    ⚠ MODO EMERGENCIA ACTIVO — Puerta forzada abierta
+    <button onclick="resetEmergencia()">Resetear</button>
+  </div>
+
+  <div class="container">
+
+    <header>
+      <div class="header-left">
+        <span class="header-tag">ESP32 · MicroPython</span>
+        <h1>Almacén de<br><em>Medicamentos</em></h1>
+      </div>
+      <div class="header-right">
+        <div class="status-dot" id="status-dot"></div>
+        <span id="status-label">Conectando…</span>
+      </div>
+    </header>
+
+    <!-- TARJETAS SENSORES -->
+    <section class="section-title">Sensores</section>
+    <div class="grid grid-4">
+
+      <div class="card" id="card-temp">
+        <div class="card-icon">🌡</div>
+        <div class="card-label">Temperatura</div>
+        <div class="card-value" id="val-temp">--</div>
+        <div class="card-unit">°C</div>
+        <div class="card-badge" id="badge-temp"></div>
+        <div class="rango">Rango: 20 – 25 °C</div>
+      </div>
+
+      <div class="card" id="card-hum">
+        <div class="card-icon">💧</div>
+        <div class="card-label">Humedad</div>
+        <div class="card-value" id="val-hum">--</div>
+        <div class="card-unit">%</div>
+        <div class="card-badge" id="badge-hum"></div>
+        <div class="rango">Rango: 40 – 60 %</div>
+      </div>
+
+      <div class="card" id="card-dist">
+        <div class="card-icon">📡</div>
+        <div class="card-label">Distancia</div>
+        <div class="card-value" id="val-dist">--</div>
+        <div class="card-unit">cm</div>
+        <div class="card-badge" id="badge-pres"></div>
+        <div class="rango">Presencia &lt; 10 cm</div>
+      </div>
+
+      <div class="card" id="card-boton">
+        <div class="card-icon">🔴</div>
+        <div class="card-label">Botón emergencia</div>
+        <div class="card-value" id="val-emerg">--</div>
+        <div class="card-unit">&nbsp;</div>
+        <div class="card-badge"></div>
+        <div class="rango">IRQ — apertura forzada</div>
+      </div>
+
+    </div>
+
+    <!-- TARJETAS ACTUADORES -->
+    <section class="section-title">Actuadores</section>
+    <div class="grid grid-4">
+
+      <div class="card" id="card-puerta">
+        <div class="card-icon">🚪</div>
+        <div class="card-label">Puerta (Servo)</div>
+        <div class="card-value" id="val-puerta">--</div>
+        <div class="card-unit">&nbsp;</div>
+      </div>
+
+      <div class="card" id="card-led-temp">
+        <div class="card-icon">🔴</div>
+        <div class="card-label">LED Temperatura</div>
+        <div class="led-circle" id="led-temp-circle"></div>
+        <div class="card-value small" id="val-led-temp">--</div>
+      </div>
+
+      <div class="card" id="card-led-hum">
+        <div class="card-icon">🔵</div>
+        <div class="card-label">LED Humedad</div>
+        <div class="led-circle" id="led-hum-circle" style="background:var(--azul)"></div>
+        <div class="card-value small" id="val-led-hum">--</div>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">🖥</div>
+        <div class="card-label">OLED</div>
+        <div class="card-value small">Activa</div>
+        <div class="rango">Muestra temp, hum,<br>dist y estado puerta</div>
+      </div>
+
+    </div>
+
+    <!-- CONTROL MANUAL -->
+    <section class="section-title">Control manual</section>
+    <div class="control-bar">
+      <button class="btn btn-open"  onclick="controlPuerta('abrir')">Abrir puerta</button>
+      <button class="btn btn-close" onclick="controlPuerta('cerrar')">Cerrar puerta</button>
+    </div>
+
+    <!-- GRÁFICAS -->
+    <section class="section-title">Histórico en tiempo real</section>
+    <div class="charts-grid">
+      <div class="chart-card">
+        <h3>🌡 Temperatura (°C)</h3>
+        <canvas id="chartTemp"></canvas>
+      </div>
+      <div class="chart-card">
+        <h3>💧 Humedad (%)</h3>
+        <canvas id="chartHum"></canvas>
+      </div>
+    </div>
+
+    <!-- REGISTRO DE EVENTOS -->
+    <section class="section-title">Registro de eventos</section>
+    <div class="log-box" id="log-box">
+      <p class="log-placeholder">Esperando datos del ESP32…</p>
+    </div>
+
+  </div><!-- /container -->
+
+<script src="datos.js"></script>
+</body>
+</html>
