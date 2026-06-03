@@ -112,7 +112,7 @@ farmacia_esp32/
 ### 3. Lógica de operación
 
 **Control automático de puerta:**
-- Si el HC-SR04 detecta un objeto a mas de 3 cm y menos de 10 cm durante 2 ciclos consecutivos → el servo abre la puerta a 90°.
+- Si el HC-SR04 detecta un objeto a mas de 5 cm y menos de 10 cm durante 2 ciclos consecutivos → el servo abre la puerta a 90°.
 - Al alejarse el objeto → el servo cierra la puerta a 0°.
 
 **Botón de emergencia (interrupción IRQ):**
@@ -163,5 +163,5 @@ La interfaz muestra en tiempo real:
 |---|---|---|
 | Temperatura | 20 °C | 25 °C |
 | Humedad | 40 % | 60 % |
-| Distancia presencia | 3cm | 10 cm |
+| Distancia presencia | 5 cm | 10 cm |
 | Tiempo confirmación presencia | 2 ciclos | — |
